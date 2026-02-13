@@ -1,22 +1,49 @@
 import React from 'react';
 
-const ItineraryList = ({ selectedIds, allSpots }) => {
-  // 1. Filter the master list to find only the selected spots
-  const savedSpots = allSpots.filter(spot => selectedIds.includes(spot._id));
+const ItineraryList = ({ selectedIds, onDelete}) => {
+  // selectedIds is actually the full array of objects now: [{spot: {...}, day: 1}, ...]
+  
+  // 1. Get unique days and sort them
+  const days = [...new Set(selectedIds.map(item => item.day))].sort((a, b) => a - b);
 
-  if (savedSpots.length === 0) {
-    return <p className="text-slate-400 italic text-sm">Your itinerary is empty. Add some peace!</p>;
+  if (selectedIds.length === 0) {
+    return <p className="text-slate-400 italic text-sm">Your itinerary is empty.</p>;
   }
 
   return (
-    <div className="space-y-3">
-      {savedSpots.map((spot) => (
-        <div key={spot._id} className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
-          <div>
-            <p className="font-medium text-slate-800">{spot.name}</p>
-            <p className="text-[10px] text-slate-400 uppercase tracking-wider">{spot.location}</p>
+    <div className="space-y-4">
+      {days.map(day => (
+        <div key={day}>
+          {/* Day Header */}
+          <h4 className="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-2 border-b border-emerald-100 pb-1">
+            Day {day}
+          </h4>
+          
+          {/* Filter spots for this specific day */}
+          <div className="space-y-2">
+            {selectedIds
+              .filter(item => item.day === day)
+              .map((item) => (
+                <div key={item._id} className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <div>
+                    <p className="font-medium text-slate-800 text-sm">{item.spot.name}</p>
+                    <p className="text-[10px] text-slate-400 uppercase">{item.spot.location}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold">₹{item.spot.avgDailyCost}</span>
+                    
+                    {/* The Delete Button */}
+                    <button 
+                        onClick={() => onDelete(item.spot._id)}
+                        className="text-slate-300 hover:text-red-500 transition-colors"
+                        title="Remove from plan"
+                    >
+                        ✕
+                    </button>
+                  </div>
+                </div>
+            ))}
           </div>
-          <p className="text-emerald-700 font-bold">₹{spot.avgDailyCost}</p>
         </div>
       ))}
     </div>

@@ -13,7 +13,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [allTrips,setAllTrips]=useState([]);
   const [isSideBarOpen,setIsSidebarOpen] =useState(false);
-
+  
   // 1. Fetch Discovery Data on Load
   useEffect(() => {
     const fetchSpots = async () => {

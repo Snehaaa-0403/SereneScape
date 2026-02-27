@@ -7,7 +7,7 @@ const CreateTripModal = ({ isOpen, onClose, onTripCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await fetch('http://localhost:5001/api/trips', {
+        const response = await fetch('https://serenescape.onrender.com/api/trips', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

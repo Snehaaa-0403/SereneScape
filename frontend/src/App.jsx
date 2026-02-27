@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchSpots = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/spots')
+        const response = await fetch('https://serenescape.onrender.com/api/spots')
         const result = await response.json()
         if (result.success) setSpots(result.data)
       } catch (error) {
@@ -33,7 +33,7 @@ function App() {
   useEffect(()=>{
     const fetchData = async()=>{
       try{
-        const response=await fetch('http://localhost:5001/api/trips');
+        const response=await fetch('https://serenescape.onrender.com/api/trips');
         const result = await response.json(); 
         if(result.success){
           setAllTrips(result.data);
@@ -51,7 +51,7 @@ function App() {
 
   const handleLoadTrip = async(tripId)=>{
     try {
-      const response = await fetch(`http://localhost:5001/api/trips/${tripId}`);
+      const response = await fetch(`https://serenescape.onrender.com/api/trips/${tripId}`);
       const result = await response.json();
       if (result.success) {
         setCurrentTrip(result.data); // Restore the trip to the dashboard
@@ -69,7 +69,7 @@ function App() {
 
     try {
       // Make sure this URL matches your backend route exactly
-      const response = await fetch(`http://localhost:5001/api/trips/${currentTrip._id}/spots/${spotId}`, {
+      const response = await fetch(`https://serenescape.onrender.com/api/trips/${currentTrip._id}/spots/${spotId}`, {
         method: 'DELETE',
       });
 
@@ -118,7 +118,7 @@ function App() {
 
     try {
       // 3. Send Spot ID AND Day
-      const response = await fetch(`http://localhost:5001/api/trips/${currentTrip._id}/add-spot`, {
+      const response = await fetch(`https://serenescape.onrender.com/api/trips/${currentTrip._id}/add-spot`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ spotId, day }) 
@@ -163,7 +163,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/api/trips/${currentTrip._id}/expense`, {
+      const response = await fetch(`https://serenescape.onrender.com/api/trips/${currentTrip._id}/expense`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, amount: Number(amount) }) 
